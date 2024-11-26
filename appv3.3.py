@@ -223,5 +223,6 @@ elif tab_selection == "About the Data":
         **# Days PM10**  
         The number of days in the year when PM10 was the main pollutant.
         
-        A daily index value is calculated for each air pollutant measured. The highest of those index values is the AQI value, and the pollutant responsible for
-
+        A daily index value is calculated for each air pollutant measured. The highest of those index values is the AQI value, and the pollutant responsible for...
+        """
+    )
