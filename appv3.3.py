@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np  # For standard deviation calculation
-from PIL import Image  # Import the Python Imaging Library (PIL) to handle images
 
 # Set up the background image for the top section
 def add_partial_background_image(image_url):
@@ -146,29 +145,7 @@ elif tab_selection == "About the Data":
         air quality indicators across different regions and times. 
         """
     )
-
-    # Add custom CSS to center the image
-    st.markdown(
-        """
-        <style>
-        .centered-image {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        </style>
-        """, unsafe_allow_html=True
-    )
-    
-    # Reference the image stored in your GitHub repository (use raw URL)
-    image_url = "https://raw.githubusercontent.com/OctuplePants/my_repo/main/DATA.jpg"
-    
-    # Display the image 1.3 times bigger (130% of the original size) and centered
-    st.markdown(
-        f'<img src="{image_url}" class="centered-image" width="1300"/>',
-        unsafe_allow_html=True
-    )
-
+    st.image("https://globalprograms.unm.edu/assets/img/peng-logo-wide.png", caption="Air Quality Monitoring", use_column_width=True)
     st.write(
         """
         The dataset can be used for various analyses including time series, pollution trends, 
@@ -176,6 +153,3 @@ elif tab_selection == "About the Data":
         environment.
         """
     )
-
-
-
