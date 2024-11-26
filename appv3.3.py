@@ -164,7 +164,10 @@ elif tab_selection == "About the Data":
     image_url = "https://raw.githubusercontent.com/OctuplePants/my_repo/main/DATA.jpg"
     
     # Display the image 1.3 times bigger and centered
-    st.image(image_url, caption="Air Quality Monitoring", width=1300, use_column_width=False, class_="centered-image")
+    st.markdown(
+        f'<img src="{image_url}" class="centered-image" width="1300"/>',
+        unsafe_allow_html=True
+    )
 
     st.write(
         """
@@ -173,7 +176,6 @@ elif tab_selection == "About the Data":
         environment.
         """
     )
-
 
 
 
