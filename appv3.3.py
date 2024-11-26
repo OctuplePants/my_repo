@@ -150,9 +150,9 @@ elif tab_selection == "About the Data":
     # Reference the image stored in your GitHub repository (use raw URL)
     image_url = "https://raw.githubusercontent.com/OctuplePants/my_repo/main/DATA.jpg"
     
-    # Display the image
-    st.image(image_url, caption="Air Quality Monitoring", use_column_width=True)
-    
+    # Display the image 1.3 times bigger than the default size (adjust width)
+    st.image(image_url, caption="Air Quality Monitoring", width=1300)  # Set width to 1300 pixels (about 1.3 times larger)
+
     st.write(
         """
         The dataset can be used for various analyses including time series, pollution trends, 
@@ -160,7 +160,6 @@ elif tab_selection == "About the Data":
         environment.
         """
     )
-
 
 
 
