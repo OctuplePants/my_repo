@@ -44,6 +44,20 @@ if uploaded_file is not None:
     st.write("### Filtered Data Preview (Rows & Columns)")
     st.dataframe(filtered_data)
 
+    # Add standard deviation calculator
+    st.write("### Standard Deviation Calculator")
+    std_columns = st.multiselect(
+        "Select Columns for Standard Deviation (numeric only)",
+        options=[col for col in selected_columns if pd.api.types.is_numeric_dtype(filtered_data[col])]
+    )
+
+    if std_columns:
+        std_values = filtered_data[std_columns].std()
+        st.write("### Standard Deviation Results")
+        st.write(std_values)
+    else:
+        st.info("Please select at least one numeric column for standard deviation calculation.")
+
     # Multiselect for X-axis columns
     st.write("### Select X-axis Columns")
     x_columns = st.multiselect(
@@ -110,3 +124,4 @@ if uploaded_file is not None:
     st.write("Tip: Ensure the selected columns are numeric for meaningful plots.")
 else:
     st.info("Please upload a CSV file to get started.")
+
