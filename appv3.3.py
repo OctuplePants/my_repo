@@ -9,28 +9,24 @@ def add_partial_background_image(image_url):
     <style>
     .top-section {{
         height: 25vh; /* Set height to 1/4 of the viewport */
-        background: url({"https://globalprograms.unm.edu/assets/img/peng-logo-wide.png"});
+        background: url("{image_url}");
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        font-size: 2em;
-        font-weight: bold;
-        text-align: center;
     }}
     </style>
-    <div class="top-section">
-        <h1>ENG-220 Group 7<br>Air Quality<br>Visualization Dashboard</h1>
-    </div>
+    <div class="top-section"></div>
     """
     st.markdown(partial_background_css, unsafe_allow_html=True)
 
 # Add your image URL here (can also be a local file served as a URL)
-image_url = "https://globalprograms.unm.edu/assets/img/peng-logo-wide.png"  # Replace with your image URL
+image_url = "https://globalprograms.unm.edu/assets/img/peng-logo-wide.png"  # Provided image URL
 add_partial_background_image(image_url)
+
+# Title directly under the image
+st.markdown("""
+    <h1 style='text-align: center;'>ENG-220 Group 7<br>Air Quality<br>Visualization Dashboard</h1>
+""", unsafe_allow_html=True)
 
 # File uploader for CSV
 uploaded_file = st.file_uploader("Upload CSV File", type=["csv"])
@@ -131,3 +127,4 @@ if uploaded_file is not None:
     st.write("Tip: Ensure the selected columns are numeric for meaningful plots.")
 else:
     st.info("Please upload a CSV file to get started.")
+
