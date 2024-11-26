@@ -9,7 +9,7 @@ def add_partial_background_image(image_url):
     <style>
     .top-section {{
         height: 25vh; /* Set height to 1/4 of the viewport */
-        background: url({"https://globalprograms.unm.edu/assets/img/peng-logo-wide.png"});
+        background: url("{https://globalprograms.unm.edu/assets/img/peng-logo-wide.png}");
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
@@ -31,9 +31,6 @@ def add_partial_background_image(image_url):
 # Add your image URL here (can also be a local file served as a URL)
 image_url = "https://globalprograms.unm.edu/assets/img/peng-logo-wide.png"  # Replace with your image URL
 add_partial_background_image(image_url)
-
-# Remove the original title and replace it with a new one
-st.markdown("<h2 style='text-align: center;'>ENG-220 Group 7 - Air Quality Visualization Dashboard</h2>", unsafe_allow_html=True)
 
 # File uploader for CSV
 uploaded_file = st.file_uploader("Upload CSV File", type=["csv"])
@@ -134,4 +131,3 @@ if uploaded_file is not None:
     st.write("Tip: Ensure the selected columns are numeric for meaningful plots.")
 else:
     st.info("Please upload a CSV file to get started.")
-
