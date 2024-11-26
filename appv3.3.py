@@ -147,11 +147,24 @@ elif tab_selection == "About the Data":
         """
     )
 
+    # Add custom CSS to center the image
+    st.markdown(
+        """
+        <style>
+        .centered-image {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        </style>
+        """, unsafe_allow_html=True
+    )
+    
     # Reference the image stored in your GitHub repository (use raw URL)
     image_url = "https://raw.githubusercontent.com/OctuplePants/my_repo/main/DATA.jpg"
     
-    # Display the image 1.3 times bigger than the default size (adjust width)
-    st.image(image_url, caption="Air Quality Monitoring", width=1300)  # Set width to 1300 pixels (about 1.3 times larger)
+    # Display the image 1.3 times bigger and centered
+    st.image(image_url, caption="Air Quality Monitoring", width=1300, use_column_width=False, class_="centered-image")
 
     st.write(
         """
@@ -160,6 +173,7 @@ elif tab_selection == "About the Data":
         environment.
         """
     )
+
 
 
 
