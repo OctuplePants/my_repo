@@ -9,7 +9,7 @@ def add_partial_background_image(image_url):
     <style>
     .top-section {{
         height: 25vh; /* Set height to 1/4 of the viewport */
-        background: url("{image_url}");
+        background: url({"https://globalprograms.unm.edu/assets/img/peng-logo-wide.png"});
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
