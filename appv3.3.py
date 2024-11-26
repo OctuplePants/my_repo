@@ -1,9 +1,10 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np  # For standard deviation calculation
 
 # Title of the app
-st.title("CSV Data Visualization App")
+st.title("CSV Data Visualization and Analysis App")
 
 # File uploader for CSV
 uploaded_file = st.file_uploader("Upload CSV File", type=["csv"])
@@ -44,29 +45,19 @@ if uploaded_file is not None:
     st.write("### Filtered Data Preview (Rows & Columns)")
     st.dataframe(filtered_data)
 
-    # Add standard deviation calculator
+    # Standard Deviation Calculator
     st.write("### Standard Deviation Calculator")
-    std_columns = st.multiselect(
-        "Select Columns for Standard Deviation (numeric only)",
-        options=[col for col in selected_columns if pd.api.types.is_numeric_dtype(filtered_data[col])]
-    )
+    std_column = st.selectbox("Select Column for Standard Deviation", selected_columns)
+    if st.button("Calculate Standard Deviation"):
+        try:
+            std_values = filtered_data[std_column].astype(float)
+            std_result = np.std(std_values, ddof=1)  # Using sample standard deviation
+            st.success(f"The standard deviation of '{std_column}' is: {std_result}")
+        except ValueError:
+            st.error(f"Selected column '{std_column}' contains non-numeric data. Please select a numeric column.")
 
-    if std_columns:
-        std_values = filtered_data[std_columns].std()
-        st.write("### Standard Deviation Results")
-        st.write(std_values)
-    else:
-        st.info("Please select at least one numeric column for standard deviation calculation.")
-
-    # Multiselect for X-axis columns
-    st.write("### Select X-axis Columns")
-    x_columns = st.multiselect(
-        "Select X-axis Columns (Combined)",
-        options=selected_columns,
-        default=[selected_columns[0]] if selected_columns else []
-    )
-
-    # Dropdown for Y-axis column
+    # Dropdown for selecting columns for plotting
+    x_column = st.selectbox("Select X-axis column", selected_columns)
     y_column = st.selectbox("Select Y-axis column", selected_columns)
 
     # Dropdown for graph type
@@ -77,36 +68,26 @@ if uploaded_file is not None:
 
     # Plot button
     if st.button("Plot Graph"):
-        # Combine X-axis columns into a single label (string concatenation for now)
-        if x_columns:
-            filtered_data['X_combined'] = filtered_data[x_columns].apply(
-                lambda row: ' | '.join(row.values.astype(str)), axis=1
-            )
-            x_column_combined = 'X_combined'
-        else:
-            st.error("Please select at least one column for the X-axis.")
-            st.stop()
-
         fig, ax = plt.subplots()
 
         if graph_type == "Line":
-            ax.plot(filtered_data[x_column_combined], filtered_data[y_column], marker='o')
-            ax.set_title(f"{y_column} vs {' & '.join(x_columns)} (Line Plot)")
+            ax.plot(filtered_data[x_column], filtered_data[y_column], marker='o')
+            ax.set_title(f"{y_column} vs {x_column} (Line Plot)")
 
         elif graph_type == "Scatter":
-            ax.scatter(filtered_data[x_column_combined], filtered_data[y_column])
-            ax.set_title(f"{y_column} vs {' & '.join(x_columns)} (Scatter Plot)")
+            ax.scatter(filtered_data[x_column], filtered_data[y_column])
+            ax.set_title(f"{y_column} vs {x_column} (Scatter Plot)")
 
         elif graph_type == "Bar":
-            ax.bar(filtered_data[x_column_combined], filtered_data[y_column])
-            ax.set_title(f"{y_column} vs {' & '.join(x_columns)} (Bar Chart)")
+            ax.bar(filtered_data[x_column], filtered_data[y_column])
+            ax.set_title(f"{y_column} vs {x_column} (Bar Chart)")
 
         elif graph_type == "Pie":
             # Pie chart only makes sense for single-column data
-            if len(filtered_data[x_column_combined].unique()) <= 10:  # Limit to 10 unique categories for readability
+            if len(filtered_data[x_column].unique()) <= 10:  # Limit to 10 unique categories for readability
                 plt.pie(
                     filtered_data[y_column],
-                    labels=filtered_data[x_column_combined],
+                    labels=filtered_data[x_column],
                     autopct='%1.1f%%',
                     startangle=90,
                 )
@@ -115,7 +96,7 @@ if uploaded_file is not None:
                 st.error("Pie chart requires fewer unique categories in the X-axis.")
 
         if graph_type != "Pie":
-            ax.set_xlabel(' | '.join(x_columns))
+            ax.set_xlabel(x_column)
             ax.set_ylabel(y_column)
             st.pyplot(fig)
         else:
