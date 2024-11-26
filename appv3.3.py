@@ -3,6 +3,34 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np  # For standard deviation calculation
 
+# Set up the background image for the top section
+def add_partial_background_image(image_url):
+    partial_background_css = f"""
+    <style>
+    .top-section {{
+        height: 25vh; /* Set height to 1/4 of the viewport */
+        background: url({image_url});
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 2em;
+        font-weight: bold;
+    }}
+    </style>
+    <div class="top-section">
+        Welcome to the CSV Data Visualization App!
+    </div>
+    """
+    st.markdown(partial_background_css, unsafe_allow_html=True)
+
+# Add your image URL here (can also be a local file served as a URL)
+image_url = "https://www.example.com/path-to-your-background-image.jpg"  # Replace with your image URL
+add_partial_background_image(image_url)
+
 # Title of the app
 st.title("CSV Data Visualization and Analysis App")
 
@@ -105,4 +133,3 @@ if uploaded_file is not None:
     st.write("Tip: Ensure the selected columns are numeric for meaningful plots.")
 else:
     st.info("Please upload a CSV file to get started.")
-
