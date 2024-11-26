@@ -155,6 +155,15 @@ elif tab_selection == "About the Data":
         This dataset contains air quality data collected from various monitoring stations.
         The data includes measurements of pollutants such as PM2.5, PM10, CO, and other 
         air quality indicators across different regions and times. 
+
+        Two sets of data are included:
+        1. **The raw data from 2020 to 2024**  
+        The raw measurements collected for each year between 2020 and 2024.
+
+        2. **The yearly average of the data from 2020 to 2024**  
+        These are the average values calculated for each year, providing an overall view of the data trends over time.
+
+        An average and standard deviation calculator is available to calculate more specific data, allowing users to perform more in-depth statistical analysis.
         """
     )
 
@@ -214,7 +223,4 @@ elif tab_selection == "About the Data":
         **# Days PM10**  
         The number of days in the year when PM10 was the main pollutant.
         
-        A daily index value is calculated for each air pollutant measured. The highest of those index values is the AQI value, and the pollutant responsible for the highest index value is the "Main Pollutant." These columns give the number of days each pollutant measured was the main pollutant. A blank column indicates a pollutant not measured in the county or CBSA.
-        """
-    )
-
+        A daily index value is calculated for each air pollutant measured. The highest of those index values is the AQI value, and the pollutant responsible for
