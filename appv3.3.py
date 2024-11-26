@@ -65,4 +65,48 @@ if uploaded_file is not None:
     if st.button("Plot Graph"):
         # Combine X-axis columns into a single label (string concatenation for now)
         if x_columns:
-            filtered_data['X
+            filtered_data['X_combined'] = filtered_data[x_columns].apply(
+                lambda row: ' | '.join(row.values.astype(str)), axis=1
+            )
+            x_column_combined = 'X_combined'
+        else:
+            st.error("Please select at least one column for the X-axis.")
+            st.stop()
+
+        fig, ax = plt.subplots()
+
+        if graph_type == "Line":
+            ax.plot(filtered_data[x_column_combined], filtered_data[y_column], marker='o')
+            ax.set_title(f"{y_column} vs {' & '.join(x_columns)} (Line Plot)")
+
+        elif graph_type == "Scatter":
+            ax.scatter(filtered_data[x_column_combined], filtered_data[y_column])
+            ax.set_title(f"{y_column} vs {' & '.join(x_columns)} (Scatter Plot)")
+
+        elif graph_type == "Bar":
+            ax.bar(filtered_data[x_column_combined], filtered_data[y_column])
+            ax.set_title(f"{y_column} vs {' & '.join(x_columns)} (Bar Chart)")
+
+        elif graph_type == "Pie":
+            # Pie chart only makes sense for single-column data
+            if len(filtered_data[x_column_combined].unique()) <= 10:  # Limit to 10 unique categories for readability
+                plt.pie(
+                    filtered_data[y_column],
+                    labels=filtered_data[x_column_combined],
+                    autopct='%1.1f%%',
+                    startangle=90,
+                )
+                plt.title(f"{y_column} (Pie Chart)")
+            else:
+                st.error("Pie chart requires fewer unique categories in the X-axis.")
+
+        if graph_type != "Pie":
+            ax.set_xlabel(' | '.join(x_columns))
+            ax.set_ylabel(y_column)
+            st.pyplot(fig)
+        else:
+            st.pyplot(plt)
+
+    st.write("Tip: Ensure the selected columns are numeric for meaningful plots.")
+else:
+    st.info("Please upload a CSV file to get started.")
