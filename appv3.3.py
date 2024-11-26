@@ -4,6 +4,13 @@ import matplotlib.pyplot as plt
 import numpy as np  # For standard deviation calculation
 from PIL import Image  # Import the Python Imaging Library (PIL) to handle images
 
+# Load your data into a DataFrame (replace 'your_data.csv' with your actual data source)
+data = pd.read_csv('your_data.csv')
+filtered_data = data  # Apply any filtering logic if needed
+
+# Extract column names for selection
+selected_columns = filtered_data.columns.tolist()
+
 # Set up the background image for the top section
 # Standard Deviation Calculator
 st.write("### Standard Deviation Calculator")
@@ -26,6 +33,7 @@ if st.button("Calculate Average"):
         st.success(f"The average of '{avg_column}' is: {avg_result}")
     except ValueError:
         st.error(f"Selected column '{avg_column}' contains non-numeric data. Please select a numeric column.")
+
 def add_partial_background_image(image_url):
     partial_background_css = f"""
     <style>
