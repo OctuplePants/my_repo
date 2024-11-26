@@ -4,36 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np  # For standard deviation calculation
 from PIL import Image  # Import the Python Imaging Library (PIL) to handle images
 
-# Load your data into a DataFrame (replace 'your_data.csv' with your actual data source)
-data = pd.read_csv('your_data.csv')
-filtered_data = data  # Apply any filtering logic if needed
-
-# Extract column names for selection
-selected_columns = filtered_data.columns.tolist()
-
 # Set up the background image for the top section
-# Standard Deviation Calculator
-st.write("### Standard Deviation Calculator")
-std_column = st.selectbox("Select Column for Standard Deviation", selected_columns)
-if st.button("Calculate Standard Deviation"):
-    try:
-        std_values = filtered_data[std_column].astype(float)
-        std_result = np.std(std_values, ddof=1)  # Using sample standard deviation
-        st.success(f"The standard deviation of '{std_column}' is: {std_result}")
-    except ValueError:
-        st.error(f"Selected column '{std_column}' contains non-numeric data. Please select a numeric column.")
-
-# Average Calculator
-st.write("### Average Calculator")
-avg_column = st.selectbox("Select Column for Average Calculation", selected_columns, key="avg_column")
-if st.button("Calculate Average"):
-    try:
-        avg_values = filtered_data[avg_column].astype(float)
-        avg_result = np.mean(avg_values)
-        st.success(f"The average of '{avg_column}' is: {avg_result}")
-    except ValueError:
-        st.error(f"Selected column '{avg_column}' contains non-numeric data. Please select a numeric column.")
-
 def add_partial_background_image(image_url):
     partial_background_css = f"""
     <style>
@@ -235,3 +206,4 @@ elif tab_selection == "About the Data":
         A daily index value is calculated for each air pollutant measured. The highest of those index values is the AQI value, and the pollutant responsible for the highest index value is the "Main Pollutant." These columns give the number of days each pollutant measured was the main pollutant. A blank column indicates a pollutant not measured in the county or CBSA.
         """
     )
+
