@@ -163,7 +163,7 @@ elif tab_selection == "About the Data":
     # Reference the image stored in your GitHub repository (use raw URL)
     image_url = "https://raw.githubusercontent.com/OctuplePants/my_repo/main/DATA.jpg"
     
-    # Display the image 1.3 times bigger and centered
+    # Display the image 1.3 times bigger (130% of the original size) and centered
     st.markdown(
         f'<img src="{image_url}" class="centered-image" width="1300"/>',
         unsafe_allow_html=True
