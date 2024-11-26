@@ -44,8 +44,15 @@ if uploaded_file is not None:
     st.write("### Filtered Data Preview (Rows & Columns)")
     st.dataframe(filtered_data)
 
-    # Dropdown for selecting columns for plotting
-    x_column = st.selectbox("Select X-axis column", selected_columns)
+    # Multiselect for X-axis columns
+    st.write("### Select X-axis Columns")
+    x_columns = st.multiselect(
+        "Select X-axis Columns (Combined)",
+        options=selected_columns,
+        default=[selected_columns[0]] if selected_columns else []
+    )
+
+    # Dropdown for Y-axis column
     y_column = st.selectbox("Select Y-axis column", selected_columns)
 
     # Dropdown for graph type
@@ -56,40 +63,6 @@ if uploaded_file is not None:
 
     # Plot button
     if st.button("Plot Graph"):
-        fig, ax = plt.subplots()
-
-        if graph_type == "Line":
-            ax.plot(filtered_data[x_column], filtered_data[y_column], marker='o')
-            ax.set_title(f"{y_column} vs {x_column} (Line Plot)")
-
-        elif graph_type == "Scatter":
-            ax.scatter(filtered_data[x_column], filtered_data[y_column])
-            ax.set_title(f"{y_column} vs {x_column} (Scatter Plot)")
-
-        elif graph_type == "Bar":
-            ax.bar(filtered_data[x_column], filtered_data[y_column])
-            ax.set_title(f"{y_column} vs {x_column} (Bar Chart)")
-
-        elif graph_type == "Pie":
-            # Pie chart only makes sense for single-column data
-            if len(filtered_data[x_column].unique()) <= 10:  # Limit to 10 unique categories for readability
-                plt.pie(
-                    filtered_data[y_column],
-                    labels=filtered_data[x_column],
-                    autopct='%1.1f%%',
-                    startangle=90,
-                )
-                plt.title(f"{y_column} (Pie Chart)")
-            else:
-                st.error("Pie chart requires fewer unique categories in the X-axis.")
-
-        if graph_type != "Pie":
-            ax.set_xlabel(x_column)
-            ax.set_ylabel(y_column)
-            st.pyplot(fig)
-        else:
-            st.pyplot(plt)
-
-    st.write("Tip: Ensure the selected columns are numeric for meaningful plots.")
-else:
-    st.info("Please upload a CSV file to get started.")
+        # Combine X-axis columns into a single label (string concatenation for now)
+        if x_columns:
+            filtered_data['X
